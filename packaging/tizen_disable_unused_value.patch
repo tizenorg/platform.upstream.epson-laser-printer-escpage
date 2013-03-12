@@ -1,0 +1,18 @@
+--- lib/epson-escpr-api.c.orig	2012-11-27 18:20:00.890486724 +0900
++++ lib/epson-escpr-api.c	2012-11-27 18:20:21.210486604 +0900
+@@ -3475,6 +3475,7 @@
+       EPS_RETURN( EPS_ERR_INV_DUPLEX )
+     }
+     debug_msg("Checking here 0.5 \n");
++#if 0	
+     /*** Brightness                                                                     */
+     if (! (   (jobAttr->brightness         >= -50                      ) &&
+           (jobAttr->brightness         <=  50                      )    ) ){
+@@ -3496,6 +3497,7 @@
+       EPS_RETURN( EPS_ERR_INV_SATURATION )
+     }
+     debug_msg("Checking here 0.8 \n");
++#endif
+     /*** Paper Source                                                                   */
+     if (! (   (jobAttr->paperSource    == EPS_MPID_AUTO            ) ||
+           (jobAttr->paperSource        == EPS_MPID_REAR            ) ||

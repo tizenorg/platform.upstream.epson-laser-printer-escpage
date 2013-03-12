@@ -1,0 +1,8 @@
+<manifest>
+	<request>
+		<domain name="cups"/>
+	</request>
+	<assign>
+		<filesystem path="/usr/lib/libescpage.so.1.0.1" label="_" />
+	</assign>
+</manifest>

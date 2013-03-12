@@ -1,0 +1,299 @@
+Epson Laser Printer Driver (ESC/Page) 説明書
+
+Copyright (C) Seiko Epson Corporation 2005-2012.
+
+目次
+1  使用許諾契約
+2  修正履歴
+3  製品説明
+4  インストールとCUPSの設定
+    4.1  インストール
+    4.2  インストール後の設定
+5  印刷
+    5.1  設定項目
+    5.2  設定項目詳細
+    5.3  設定方法
+    5.4  印刷方法
+6  LSB非対応ディストリビューションでのビルド方法
+    6.1 Redhat系ディストリビューションの場合
+    6.2 Debian系ディストリビューションの場合
+    6.3 それ以外のディストリビューションの場合
+
+-------------------------------------------------------------------------------
+1  使用許諾契約
+-------------------------------------------------------------------------------
+本ソフトウェアは、GNU General Public License (GPL)に準拠しています。
+GPLの詳細はCOPYINGファイルを参照して下さい。
+
+
+-------------------------------------------------------------------------------
+2  修正履歴
+-------------------------------------------------------------------------------
+./NEWSに記載。
+
+
+-------------------------------------------------------------------------------
+3  製品説明
+-------------------------------------------------------------------------------
+本ソフトウェアは、Linuxプラットフォーム上において、Common UNIX Printing
+System(CUPS)より利用されるフィルタプログラムです。Seiko Epson製レーザープリンタを
+使った、高品質印刷を提供致します。
+
+本ソフトウェアは、LSB 3.2に準拠しており、LSB3.2以上をサポートするディストリ
+ビューションで使用可能です
+
+-------------------------------------------------------------------------------
+4  インストールとCUPSの設定
+-------------------------------------------------------------------------------
+4.1  インストール
+	   お使いのディストリビューションに合わせて、rpm、debパッケージをインストールします。
+	   以下のコマンドをroot権限で実行して下さい。
+	   注) 以下のパッケージ名はお使いのバージョンにより異なります。
+	   
+	   Redhat系Linuxの場合
+	   -----------------
+	   # rpm -i epson-laser-printer-escpage-1.0.1-1lsb3.2.i486.rpm
+	   -----------------
+	   Debian系Linuxの場合
+	   -----------------
+	   # dpkg -i epson-laser-printer-escpage-1.0.1-1lsb3.2_i386.deb
+	   -----------------
+
+4.2  インストール後の設定
+   本ソフトウェアを使用する為に、CUPSの設定を行う必要があります。
+   印刷を行う前に、必ず以下の手順を実行して下さい。
+
+	4.2.1  CUPSの再起動
+	     インストールされたフィルタを有効化する為に、CUPSを再起動して下さい。
+	     root権限で以下のコマンドを実行します。
+
+	     例) Redhat系ディストリビューションの場合
+	     -----------------
+	     # /etc/init.d/cups restart
+	     -----------------
+	     Debian系ディストリビューションの場合
+	     -----------------
+	     # /etc/init.d/cupsys restart
+	     -----------------
+
+	4.2.2  プリンタの追加
+
+	  [ コマンドによる追加 ]
+	     root権限で以下のコマンドを実行します。
+	     -----------------
+	     # lpadmin -p [PRINTER_NAME] -v [DEVICE_URI] -P [PPD_FILE] -E
+	     -----------------
+
+	     オプションの説明： -p   プリンタ設定名称の指定
+	                        -E   プリンタを有効にする
+	                        -v   接続に使用するドライバと接続先の指定
+	                        -P   設定ファイル(PPDファイル)の指定
+
+	     例) 利用するプリンタがAL-M2010の場合
+	     -----------------
+	     # lpadmin -p al-m2010 -v usb:/EPSON/AL-M2010 -P /opt/epson-laser-printer-escpage/ppds/Epson/Epson-AL-M2010-epson-laser-printer-en.ppd.gz -E
+	     -----------------
+
+	     lpadminの詳細については、lpadmin(8)を参照下さい。
+
+
+	  [ ブラウザからの追加 ]
+	     CUPSでは、設定用のCGIが用意されており、プリンタの設定をブラウザ上
+	     で行うことができます。プリンタの追加には、以下の手順を実行します。
+	       注) 以下のメニュー項目は、CUPSのバージョンやお使いの環境により
+	           異なります。
+
+	     (1) プリンターの電源を入れて、PCにUSBケーブルで接続してください。
+	     (2) ブラウザから、CUPSサーバ (Port:631) に接続
+	         例) CUPSがlocalhost上にある場合、以下のURLに
+	             アクセスして下さい。
+	             -----------------
+	             http://localhost:631/
+	             -----------------
+	     (3) "Add Printer" を選択
+	     (4) "Name" にプリンタ設定名称を記述して、"Continue" を選択
+	          (他の項目は必須ではありません)
+	     (5) "Device" に USB を設定して、"Continue" を選択
+	         例) 利用するプリンタがAL-M2010の場合、"Model" は以下のように
+	             表示されます。
+	             -----------------
+	             "AL-M2010 USB #1(AL-M2010)"
+	             -----------------
+	     (6) "Model" に "EPSON AL-M2010 Printer Driver for Linux" を設定して、
+	         "Add Printer" を選択
+	         例) 利用するプリンタがAL-M2010の場合、"Model" は以下のように
+	             表示されます。
+	             -----------------
+	             "EPSON AL-M2010, EPSON AL-M2010 Printer Driver for Linux (en,en,ja,nl,fr,de,it,pt,es,ko,zh_CN,zh_TW)"
+	             -----------------
+	     (6') 上記(6)の代わりに、[Browse]から直接PPDファイルを指定
+	          例) 利用するプリンタがAL-M2010の場合、
+	              以下のファイルを指定します。
+	              -----------------
+	              /opt/epson-laser-printer-escpage/ppds/Epson/Epson-AL-M2010-epson-laser-printer-en.ppd.gz
+	              -----------------
+
+以上で、本ソフトウェア用のプリンタが追加されます。
+
+
+-------------------------------------------------------------------------------
+5  印刷
+-------------------------------------------------------------------------------
+5.1  設定項目
+   本ソフトウェアにて設定可能な項目は、以下の通りです。
+
+   * インク
+        カラー印刷かモノクロ印刷かを選択します。
+
+   * 用紙サイズ
+        印刷物の用紙サイズを選択します。
+
+   * 印刷品質
+        印刷物のメディアタイプ、及びその際の印刷品質を選択します。
+
+
+5.2  設定項目詳細
+   本ソフトウェアで指定可能なオプションのリストを示します。
+
+   * リスト項目の意味
+     - Keyword          オプション指定時に使用する設定文字列
+     - ブラウザ表示     CUPSの設定ブラウザ画面上に表示される文字列
+     - 説明             設定に関する解説
+
+   [ 用紙サイズ ]
+      オプション指定での設定名称 : PageSizeまたはmedia
+      ブラウザ上での設定名称 : MediaSize
+
+      注) mediaオプションに複数の設定を記述する場合は、用紙サイズを
+          先頭に記述して下さい。mediaオプションの使用方法については、
+          CUPSのドキュメントを参照下さい。
+
+   [ 印刷品質 ]
+      オプション指定での設定名称 : Quality
+      ブラウザ上での設定名称 : Quality
+
+
+5.3  設定方法
+
+   印刷設定を行うには、以下の3つの方法があります。
+
+   * コマンドから設定する
+        lpoptionsを使用します。コマンドの詳細についてはlpoptions(1)を
+        参照下さい。
+
+        例) 登録プリンタ名 al-m2010 に対して
+            PageSize=A4, quality=PLAIN_NORMAL を指定する場合
+        -----------------
+        $ lpoptions -p al-m2010 -o media=A4 -o quality=PLAIN_NORMAL
+        -----------------
+
+   * ブラウザから設定する
+        プリンタ画面より、"Configure Printer" を選択すると、設定画面が
+        表示されます。
+
+   * 印刷時にオプションを指定する
+        lpoptions と同様に、-oオプションで設定します。コマンドの
+        詳細については、lpr(1)、lp(1)を参照下さい。
+
+5.4  印刷方法
+
+   印刷には、従来のLPRと同様にlprコマンドもしくはlpコマンドを用いて
+   実行します。印刷できるフォーマットは以下の通りです。
+
+   * Postscript
+   * PDF
+   * Text
+   * 各種画像ファイル
+
+   例)
+      デフォルト設定での印刷の場合
+      -----------------
+      $ lpr -P PRINTER_NAME <file>
+      $ lp -d PRINTER_NAME <file>
+      -----------------
+
+      printer_name=al-m2010, media=Letter の場合
+      -----------------
+      $ lpr -P al-m2010 -o media=Letter <file>
+      $ lp -d al-m2010 -o media=Letter <file>
+      -----------------
+
+印刷の方法については、CUPSの実装に依存します。より詳しい情報については、
+CUPSのドキュメントを参照下さい。
+
+-------------------------------------------------------------------------------
+6  LSB非対応ディストリビューションでのビルド方法
+-------------------------------------------------------------------------------
+6.1 Redhat系ディストリビューションの場合
+
+	6.1.1 ダウンロードしたsrs.rpmを解凍します。
+	   $ rpm2cpio epson-laser-printer-escpage-1.0.1-1lsb3.2.src.rpm | cpio -id
+	   $ tar zxvf epson-laser-printer-escpage-1.0.1-1lsb3.2.tar.gz
+
+	6.1.2 configureを実行し、ソースtarballを作成します。
+	   $ cd epson-laser-printer-escpage-1.0.1
+	   $ autoreconf -fi && ./configure --prefix=/usr && make dist
+
+	6.1.3 パッケージ作成用ディレクトリを作成します。
+	   $ mkdir -p ~/rpmbuild/SOURCES
+	   $ mkdir -p ~/rpmbuild/SPECS
+	   $ mkdir -p ~/rpmbuild/BUILD
+	   $ mkdir -p ~/rpmbuild/RPMS
+	   $ mkdir -p ~/rpmbuild/SRPMS
+
+	   (~/.rpmmacrosでrpmbuild以外のディレクトリを指定することもできます。)
+
+	6.1.4 ソースtarballとspecファイルを、上記のディレクトリにコピーします。
+	   $ cp epson-laser-printer-escpage-1.0.1.tar.gz ~/rpmbuild/SOURCES/.
+	   $ cp epson-laser-printer-escpage.spec ~/rpmbuild/SPECS
+	   
+	6.1.5 rpmパッケージを作成します。
+	   $ cd ~/rpmbuild/SPECS
+	   $ rpmbuild -ba --clean epson-laser-printer-escpage.spec
+	   
+	   成功すると、~/rpmbuild/RPMSにrpmパッケージが作成されます。
+
+
+6.2 Debian系ディストリビューションの場合
+
+6.2.1 ダウンロードしたsrs.rpmを解凍します。
+   $ rpm2cpio epson-laser-printer-escpage-1.0.1-1lsb3.2.src.rpm | cpio -id
+   $ tar zxvf epson-laser-printer-escpage-1.0.1-1lsb3.2.tar.gz
+
+6.2.2 configureを実行します。
+   $ cd epson-laser-printer-escpage-1.0.1
+   $ autoreconf -fi && ./configure --prefix=/usr
+
+6.2.3 debパッケージを作成します。
+   $ make
+   $ debuild -us -uc -b
+   
+   成功すると、ひとつ上のディレクトリにdebパッケージが作成されます。
+
+
+6.3 それ以外のディストリビューションの場合
+
+6.3.1 ダウンロードしたsrs.rpmを解凍します。
+   $ rpm2cpio epson-laser-printer-escpage-1.0.1-1lsb3.2.src.rpm | cpio -id
+   $ tar zxvf epson-laser-printer-escpage-1.0.1-1lsb3.2.tar.gz
+
+6.3.2 configureを実行します。
+   $ cd epson-laser-printer-escpage-1.0.1
+   $ autoreconf -fi && ./configure --prefix=/usr
+
+   CUPS filterとPPDファイルのインストール先は自動判定していますが、
+   以下のconfigure オプションで、明示的に指定することもできます。
+   
+   * "--with-cupsfilterdir" ..... CUPSフィルターの保存先
+                                  例) /usr/lib/cups/filter
+   * "--with-cupsppddir" ........ PPDファイルの保存先
+                                  例) /usr/share/ppd
+                                      
+6.3.3 make, make install を実行します
+   $ cd epson-laser-printer-escpage-1.0.1
+   $ make 
+   $ sudo make install
+
+
+
+***End of file
