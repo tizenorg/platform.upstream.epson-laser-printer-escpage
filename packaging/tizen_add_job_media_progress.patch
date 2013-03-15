@@ -1,0 +1,14 @@
+diff -urN epson-laser-printer-escpage.orig/src/filter.c epson-laser-printer-escpage/src/filter.c
+--- epson-laser-printer-escpage.orig/src/filter.c	2013-01-10 20:14:02.566990442 +0900
++++ epson-laser-printer-escpage/src/filter.c	2013-01-10 20:13:33.774990447 +0900
+@@ -923,6 +923,10 @@
+           }
+           debug_msg("%s:%d \t<<%s>>: \tCompleted print line [%d]\n", __FILE__, __LINE__, __FUNCTION__, i);
+         }
++		if ((i & 127) == 0)
++		{
++			fprintf(stderr, "ATTR: job-media-progress=%d\n", 100 * i / header.cupsHeight);
++		}
+       }
+     debug_msg("pageEndPage(%d) call\n", page_count);
+     err = pageEndPage();

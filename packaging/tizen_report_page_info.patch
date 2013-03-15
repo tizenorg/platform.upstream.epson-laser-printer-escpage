@@ -1,0 +1,12 @@
+diff -urN epson-laser-printer-escpage.orig/src/filter.c epson-laser-printer-escpage/src/filter.c
+--- epson-laser-printer-escpage.orig/src/filter.c	2013-01-29 09:26:35.266717859 +0900
++++ epson-laser-printer-escpage/src/filter.c	2013-01-29 09:28:45.270715387 +0900
+@@ -851,7 +851,7 @@
+     int i = 0;
+     int y_count = 0;
+     debug_msg("duplex = %d, page_count = %d\n", jobAttr.duplex, page_count);
+-    
++    fprintf(stderr, "PAGE: %d %d\n",page_count, header.NumCopies);
+     for (i = 0; i < header.cupsHeight && !cancel_flg; i ++)
+       {
+         debug_msg("%s:%d \t<<%s>>: \tStart print line [%d]\n", __FILE__, __LINE__, __FUNCTION__, i);

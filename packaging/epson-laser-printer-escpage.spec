@@ -7,18 +7,22 @@
 
 Name: epson-laser-printer-escpage
 Version: 1.0.1
-Release: 5
+Release: 8
 Source0: %{name}-%{version}.tar.gz
 License: LGPL
 Vendor: Seiko Epson Corporation
 Packager: Seiko Epson Corporation <linux-printer@epson.jp>
 BuildRoot: %{_tmppath}/%{name}-%{version}
 BuildRequires: cups-devel
+Requires: cups
 Group: Applications/System
 Summary: Epson Laser Printer Driver (ESC/Page) for Linux
 # Bug fix for Tizen
 # Structure values are unused in Tizen
 Patch0: tizen_disable_unused_value.patch
+Patch1: tizen_add_job_media_progress.patch
+Patch2: tizen_report_page_info.patch
+Patch3: tizen_fix_ignore_sigpipe.patch
 
 %description
 This software is a filter program used with Common UNIX Printing
@@ -31,6 +35,9 @@ used for all EPSON ESC/Page printers.
 %prep
 %setup -q
 %patch0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %configure \
@@ -61,7 +68,7 @@ rm -rf ${RPM_BUILD_ROOT}
 #%doc AUTHORS COPYING NEWS README README.ja
 /usr/share/license/%{name}
 %{cupsfilterdir}/*
-%{_libdir}/libescpage*.so*
+%attr(644,-,-) %{_libdir}/libescpage*.so*
 %exclude %{_libdir}/libescpage.a
 %exclude %{_libdir}/libescpage.la
 %exclude %{cupsppddir}

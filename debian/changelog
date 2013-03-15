@@ -1,3 +1,27 @@
+epson-laser-printer-escpage (1.0.1-8) unstable; urgency=low
+
+  * Fixed filter to ignore SIGPIPE
+  * Git: external/epson-laser-printer-escpage
+  * Tag: epson-laser-printer-escpage-1.0.1-8
+
+ -- GangHeok Kim <gangheok.kim@samsung.com>  Tue, 05 Feb 2013 15:08:19 +0900
+
+epson-laser-printer-escpage (1.0.1-7) unstable; urgency=low
+
+  * Fixed to report PAGE info before job-media-progress
+  * Git: external/epson-laser-printer-escpage
+  * Tag: epson-laser-printer-escpage-1.0.1-7
+
+ -- GangHeok Kim <gangheok.kim@samsung.com>  Tue, 29 Jan 2013 09:30:48 +0900
+
+epson-laser-printer-escpage (1.0.1-6) unstable; urgency=low
+
+  * Fixed to report job media progress
+  * Git: external/epson-laser-printer-escpage
+  * Tag: epson-laser-printer-escpage-1.0.1-6
+
+ -- GangHeok Kim <gangheok.kim@samsung.com>  Thu, 10 Jan 2013 20:23:50 +0900
+
 epson-laser-printer-escpage (1.0.1-5slp2) unstable; urgency=low
 
   * Fixed uncorrect PPD files

@@ -1,8 +1,10 @@
 <manifest>
 	<request>
-		<domain name="cups"/>
+		<domain name="mobileprint"/>
 	</request>
 	<assign>
-		<filesystem path="/usr/lib/libescpage.so.1.0.1" label="_" />
+		<filesystem path="/usr/lib/libescpage.so" label="_" exec_label="_" />
+		<filesystem path="/usr/lib/libescpage.so.1" label="_" exec_label="_" />
+		<filesystem path="/usr/lib/libescpage.so.1.0.1" label="_" exec_label="_" />
 	</assign>
 </manifest>
