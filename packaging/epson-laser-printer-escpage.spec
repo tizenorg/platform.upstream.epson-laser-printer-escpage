@@ -9,6 +9,7 @@ Name: epson-laser-printer-escpage
 Version: 1.0.1
 Release: 8
 Source0: %{name}-%{version}.tar.gz
+Source1001: 	epson-laser-printer-escpage.manifest
 License: LGPL
 Vendor: Seiko Epson Corporation
 Packager: Seiko Epson Corporation <linux-printer@epson.jp>
@@ -34,6 +35,7 @@ used for all EPSON ESC/Page printers.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 %patch0
 %patch1 -p1
 %patch2 -p1
@@ -63,7 +65,7 @@ make clean
 rm -rf ${RPM_BUILD_ROOT}
 
 %files
-%manifest epson-laser-printer-escpage.manifest
+%manifest %{name}.manifest
 %defattr(-,root,root)
 #%doc AUTHORS COPYING NEWS README README.ja
 /usr/share/license/%{name}
